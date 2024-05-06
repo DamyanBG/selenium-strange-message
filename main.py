@@ -34,7 +34,7 @@ def get_driver():
     driver = webdriver.Chrome(options=options)
 
     # driver.get("https://www.jobs.bg/front_job_search.php?subm=1&categories%5B%5D=56&techs%5B%5D=Python&last=5")
-    driver.get("http://127.0.0.1:5500/JOBS.BG%20-%20IT%20%D0%9E%D0%B1%D1%8F%D0%B2%D0%B8%20%D0%B7%D0%B0%20%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20%D0%BA%D1%80%D0%B8%D1%82%D0%B5%D1%80%D0%B8%D0%B8_%20_Python_;%20%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D1%82%D0%B5%207%20%D0%B4%D0%BD%D0%B8.html")
+    driver.get("http://127.0.0.1:5500/downloaded_html/JOBS.BG%20-%20IT%20%D0%9E%D0%B1%D1%8F%D0%B2%D0%B8%20%D0%B7%D0%B0%20%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20%D0%BA%D1%80%D0%B8%D1%82%D0%B5%D1%80%D0%B8%D0%B8_%20_JavaScript_;%20%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D1%82%D0%B5%207%20%D0%B4%D0%BD%D0%B8.html")
 
 
     time.sleep(2)
@@ -82,8 +82,11 @@ def get_driver():
         filtered_li_list = list(filter(filter_list_element, li_list))
         for li in filtered_li_list:
             job_title = li.find_element(by="class name", value="card-title").find_element(by="xpath", value="./span[2]").text
+            published_date = li.find_element(by="class name", value="card-date").text
             company_name = li.find_element(by="class name", value="secondary-text").text
             skills_els = li.find_element(by="class name", value="card-tags").find_elements(by="xpath", value="./div/div")
+            job_link = li.find_element(by="class name", value="black-link-b").get_attribute("href")
+            card_info_el = li.find_element(by="class name", value="card-info")
             skills = []
             for skill_el in skills_els:
                 try:
@@ -101,8 +104,12 @@ def get_driver():
                     skills.append(skill_name)
                     
             print(job_title)
+            print(published_date)
+            print(job_link)
             print(company_name)
             print(skills)
+            print(card_info_el.text)
+            
 
 
     print(ul_list)
